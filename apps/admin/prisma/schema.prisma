@@ -35,7 +35,8 @@ model Client {
   firstName String?
   lastName  String?
   email     String? @unique
-  village   String?
+  villageId   String  @db.Uuid
+  village Village   @relation(fields: [villageId], references: [id], onDelete: Restrict)
 
   // Relations
   payments Payment[] // Un client peut avoir plusieurs paiements
@@ -44,6 +45,16 @@ model Client {
   updatedAt DateTime @updatedAt
 
   @@index([phone])
+}
+
+model Village {
+  id String @id @default(dbgenerated("gen_random_uuid()"))  @db.Uuid
+  titre String?  @unique()
+
+  // Relations
+  clients Client[]
+
+  @@index([titre])
 }
 
 // --- ENTITÉ PAIEMENT (Mise à jour) ---
