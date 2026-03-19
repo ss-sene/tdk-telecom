@@ -39,7 +39,7 @@ async function getDashboardData(params: { [key: string]: string | undefined }) {
     if (params.search && params.search.trim() !== '') {
         const searchTerm = params.search.trim();
         where.client = {
-            ...where.client,
+            ...(where.client ? where.client : {}),
             OR: [
                 { firstName: { contains: searchTerm, mode: 'insensitive' } },
                 { lastName: { contains: searchTerm, mode: 'insensitive' } },
