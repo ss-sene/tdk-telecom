@@ -32,3 +32,9 @@ export async function authenticate(_prevState: AuthState, formData: FormData): P
     // Redirection native côté serveur
     redirect('/admin');
 }
+
+export async function logout(): Promise<void> {
+    const cookieStore = await cookies();
+    cookieStore.delete('admin_session');
+    redirect('/login');
+}

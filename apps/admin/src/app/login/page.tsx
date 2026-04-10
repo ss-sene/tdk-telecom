@@ -2,41 +2,54 @@
 
 import { useActionState } from 'react';
 import { authenticate } from '@/core/actions/auth.action';
+import Image from 'next/image';
 
 export default function LoginPage() {
-    // Hook React 19 pour la gestion d'état des Server Actions
     const [state, formAction, isPending] = useActionState(authenticate, {});
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-            <div className="w-full max-w-md space-y-8 rounded-3xl bg-white p-10 shadow-xl ring-1 ring-gray-200">
+        <div className="flex min-h-screen items-center justify-center bg-[#F9FAFB] px-4 py-12">
+            <div className="w-full max-w-sm space-y-8 rounded-2xl bg-white p-10 shadow-sm ring-1 ring-gray-200">
 
-                <div className="text-center">
-                    <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-gray-900">
-                        Accès Restreint
-                    </h2>
-                    <p className="mt-2 text-sm text-gray-500">
-                        Veuillez vous authentifier pour accéder au dashboard TDK.
-                    </p>
+                {/* Logo + Marque */}
+                <div className="flex flex-col items-center gap-3">
+                    <div className="relative h-12 w-12">
+                        <Image
+                            src="/logo.png"
+                            alt="TDK Telecom"
+                            fill
+                            className="object-contain"
+                            priority
+                            sizes="48px"
+                        />
+                    </div>
+                    <div className="text-center">
+                        <p className="text-xs font-bold uppercase tracking-widest text-[#1A3C9F]">TDK Telecom</p>
+                        <h1 className="mt-1 text-xl font-extrabold text-gray-900">Espace administrateur</h1>
+                    </div>
                 </div>
 
-                <form action={formAction} className="mt-8 space-y-6">
-                    <div className="space-y-4">
-                        <div>
-                            <label htmlFor="password" className="sr-only">Clé d'accès</label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                required
-                                className="relative block w-full appearance-none rounded-xl border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:z-10 focus:border-[#1A3C9F] focus:outline-none focus:ring-[#1A3C9F] sm:text-sm"
-                                placeholder="Clé d'accès administrateur"
-                            />
-                        </div>
+                <form action={formAction} className="space-y-4">
+                    <div>
+                        <label htmlFor="password" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-gray-500">
+                            Clé d&apos;accès
+                        </label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            required
+                            autoComplete="current-password"
+                            className="block h-11 w-full rounded-xl border-0 px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-[#1A3C9F] outline-none"
+                            placeholder="••••••••••••"
+                        />
                     </div>
 
                     {state?.error && (
-                        <div className="rounded-lg bg-red-50 p-4 text-sm font-semibold text-red-700 ring-1 ring-inset ring-red-600/20">
+                        <div className="flex items-center gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 ring-1 ring-inset ring-red-200">
+                            <svg className="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                            </svg>
                             {state.error}
                         </div>
                     )}
@@ -44,19 +57,22 @@ export default function LoginPage() {
                     <button
                         type="submit"
                         disabled={isPending}
-                        className="group relative flex w-full justify-center rounded-xl bg-[#1A3C9F] px-4 py-3 text-sm font-bold text-white transition-all hover:bg-[#142E7B] focus:outline-none focus:ring-2 focus:ring-[#1A3C9F] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70"
+                        className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#1A3C9F] text-sm font-bold text-white transition-colors hover:bg-[#142E7B] focus:outline-none focus:ring-2 focus:ring-[#1A3C9F] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
                     >
                         {isPending ? (
                             <svg className="h-5 w-5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                             </svg>
                         ) : (
-                            'Se connecter'
+                            'Accéder au dashboard'
                         )}
                     </button>
                 </form>
 
+                <p className="text-center text-xs text-gray-400">
+                    Accès réservé aux administrateurs TDK Telecom
+                </p>
             </div>
         </div>
     );

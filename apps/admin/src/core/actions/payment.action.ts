@@ -1,12 +1,12 @@
-// apps/admin/src/core/actions/payment.action.ts
+// core/actions/payment.action.ts
 'use server';
 
-import { prisma } from '@/core/db/prisma';
-import { InitiatePaymentSchema } from '@/core/validators/payment.schema';
-import { SoftPayProvider, processPayment } from '@/core/services/softpay.service';
+import { prisma }                          from '@/core/db/prisma';
+import { InitiatePaymentSchema }           from '@/core/validators/payment.schema';
+import { createWavePayLink }               from '@/core/services/wave.service';
+import { createOrangeMoneyPayment }        from '@/core/services/orange-money.service';
 
-// --- CATALOGUE (Source de vérité anti-tampering) ---
-// Le montant est résolu ici côté serveur, jamais depuis le client
+// --- CATALOGUE (source de vérité anti-tampering) ---
 const PRICING_CATALOG: Record<string, number> = {
     'Pack Standard': 10000,
     'Pack Premium':  12000,
@@ -16,22 +16,20 @@ export async function initiatePayment(payload: unknown) {
     // --- 1. Validation ---
     const parsedData = InitiatePaymentSchema.safeParse(payload);
     if (!parsedData.success) {
-        console.error('[VALIDATION_ERROR]', parsedData.error.flatten());
+        console.error('[VALIDATION_ERROR]', parsedData.error.issues);
         return { success: false, error: 'Données invalides. Veuillez vérifier le formulaire.' };
     }
 
     const dto = parsedData.data;
 
-    // --- Résolution du prix côté serveur (anti-tampering) ---
-    // dto.amount vient du client mais on le valide contre le catalogue
-    // Si le montant ne correspond à aucune offre connue → rejet
+    // --- Validation du montant côté serveur (anti-tampering) ---
     const knownPrices = Object.values(PRICING_CATALOG);
-    const actualPrice = knownPrices.includes(dto.amount) ? dto.amount : null;
-    if (!actualPrice) {
+    if (!knownPrices.includes(dto.amount)) {
         return { success: false, error: 'Offre sélectionnée invalide ou expirée.' };
     }
 
-    const cleanEmail = dto.email && dto.email.trim() !== '' ? dto.email.trim() : null;
+    const cleanEmail = dto.email?.trim() || null;
+    const appUrl     = process.env.NEXT_PUBLIC_APP_URL ?? '';
 
     try {
         // --- 2. Résolution du village ---
@@ -42,7 +40,7 @@ export async function initiatePayment(payload: unknown) {
                 + dto.newVillageName.trim().slice(1).toLowerCase();
 
             const village = await prisma.village.upsert({
-                where:  { titre: cleanName },   // ✅ titre (pas name)
+                where:  { titre: cleanName },
                 update: {},
                 create: { titre: cleanName },
             });
@@ -57,39 +55,59 @@ export async function initiatePayment(payload: unknown) {
                 firstName: dto.firstName,
                 lastName:  dto.lastName,
                 villageId: finalVillageId,
-                email:     cleanEmail,
+                ...(cleanEmail ? { email: cleanEmail } : {}),
             },
             create: {
                 phone:     dto.phone,
                 firstName: dto.firstName,
                 lastName:  dto.lastName,
                 villageId: finalVillageId,
-                email:     cleanEmail,
+                ...(cleanEmail ? { email: cleanEmail } : {}),
             },
         });
 
-        // --- 4. Créer le Payment en PENDING ---
+        // --- 4. Créer le Payment en PENDING avec le provider choisi ---
         const payment = await prisma.payment.create({
             data: {
-                amount:   actualPrice,
+                amount:   dto.amount,
                 provider: dto.provider,
                 clientId: client.id,
             },
         });
 
-        // --- 5. Appeler SoftPay ---
-        const softPayProvider = dto.provider as SoftPayProvider;
+        const successUrl = `${appUrl}/payment/success?ref=${payment.internalRef}`;
+        const cancelUrl  = `${appUrl}/checkout?cancelled=1`;
 
-        const result = await processPayment({
-            provider:      softPayProvider,
-            amount:        actualPrice,
-            phone:         dto.phone,
-            customerName:  `${dto.firstName} ${dto.lastName}`,
-            customerEmail: cleanEmail || 'client@tdk-telecom.sn',
-            internalRef:   payment.internalRef,
-            callbackUrl:   `${process.env.NEXT_PUBLIC_APP_URL}/api/payment/webhook`,
-            returnUrl:     `${process.env.NEXT_PUBLIC_APP_URL}/payment/success?ref=${payment.internalRef}`,
-            cancelUrl:     `${process.env.NEXT_PUBLIC_APP_URL}/checkout?cancelled=1`,
+        // --- 5. Appel selon l'opérateur ---
+        if (dto.provider === 'WAVE') {
+            const result = createWavePayLink({
+                amount:      dto.amount,
+                internalRef: payment.internalRef,
+            });
+
+            if (!result.success) {
+                await prisma.payment.update({
+                    where: { id: payment.id },
+                    data:  { status: 'FAILED', errorMessage: result.message },
+                });
+                return { success: false, error: result.message };
+            }
+
+            return {
+                success:     true,
+                checkoutUrl: result.payUrl,       // Ouvre l'app Wave avec le montant pré-rempli
+                internalRef: payment.internalRef,
+                provider:    'WAVE' as const,
+            };
+        }
+
+        // --- Orange Money ---
+        const result = await createOrangeMoneyPayment({
+            amount:      dto.amount,
+            internalRef: payment.internalRef,
+            notifUrl:    `${appUrl}/api/payment/webhooks/orange-money`,
+            returnUrl:   successUrl,
+            cancelUrl,
         });
 
         if (!result.success) {
@@ -100,29 +118,17 @@ export async function initiatePayment(payload: unknown) {
             return { success: false, error: result.message };
         }
 
-        // --- 6. Retourner les URLs selon le provider ---
-        // Wave        → redirectUrl (deeplink pay.wave.com)
-        // Orange Money mobile → redirectUrl (om_url deeplink)
-        // Orange Money desktop → pas de redirectUrl, on retourne qrUrl
-        if (result.provider === 'WAVE') {
-            return {
-                success:     true,
-                provider:    'WAVE',
-                redirectUrl: result.redirectUrl,
-                internalRef: payment.internalRef,
-                fees:        result.fees,
-            };
-        }
+        // Stocker le notif_token Orange Money comme providerRef
+        await prisma.payment.update({
+            where: { id: payment.id },
+            data:  { providerRef: result.notifToken },
+        });
 
-        // Orange Money
         return {
             success:     true,
-            provider:    'ORANGE_MONEY',
-            redirectUrl: result.redirectUrl,  // om_url (mobile)
-            qrUrl:       result.qrUrl,         // QR page (desktop)
-            maxitUrl:    result.maxitUrl,
+            checkoutUrl: result.paymentUrl,
             internalRef: payment.internalRef,
-            fees:        result.fees,
+            provider:    'ORANGE_MONEY' as const,
         };
 
     } catch (error) {

@@ -1,7 +1,19 @@
 @import "tailwindcss";
 
-/* Vous pouvez ajouter des variables CSS personnalisées ici si besoin */
 @theme {
-    --color-primary: #1A3C9F;
-    --color-primary-hover: #142E7B;
+  --color-brand:        #1A3C9F;
+  --color-brand-hover:  #142E7B;
+  --color-success:      #2ECA50;
+  --color-card:         #F9FAFB;
+  --font-sans:          Inter, sans-serif;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #111827;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
 }

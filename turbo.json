@@ -2,17 +2,14 @@
   "$schema": "https://turbo.build/schema.json",
   "globalEnv": [
     "DATABASE_URL",
+    "NEXT_PUBLIC_APP_URL",
     "ADMIN_SECRET_TOKEN",
-    "WEBHOOK_SECRET",
+    "WAVE_MERCHANT_ID",
+    "WAVE_WEBHOOK_SECRET",
+    "OM_BASE_URL",
     "OM_CLIENT_ID",
     "OM_CLIENT_SECRET",
-    "OM_MERCHANT_KEY",
-    "OM_BASE_URL",
-    "PAYDUNYA_MASTER_KEY",
-    "PAYDUNYA_PRIVATE_KEY",
-    "PAYDUNYA_PUBLIC_KEY",
-    "PAYDUNYA_TOKEN",
-    "PAYDUNYA_MODE"
+    "OM_MERCHANT_KEY"
   ],
   "tasks": {
     "build": {
