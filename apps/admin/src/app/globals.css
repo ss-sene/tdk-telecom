@@ -3,6 +3,7 @@
 @theme {
   --color-brand:        #1A3C9F;
   --color-brand-hover:  #142E7B;
+  --color-brand-light:  #EEF2FF;
   --color-success:      #2ECA50;
   --color-card:         #F9FAFB;
   --font-sans:          var(--font-inter), Inter, sans-serif;
