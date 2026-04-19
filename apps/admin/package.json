@@ -7,6 +7,7 @@
     "build": "pnpx prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
+    "release": "prisma migrate deploy",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seeds/seed-products.ts"

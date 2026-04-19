@@ -1,7 +1,9 @@
 'use server';
 
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { cookies }             from 'next/headers';
+import { redirect }            from 'next/navigation';
+import { timingSafeEqual }     from 'crypto';
+import { createSessionToken }  from '@/core/auth/session';
 
 export interface AuthState {
     error?: string;
@@ -9,27 +11,31 @@ export interface AuthState {
 
 export async function authenticate(_prevState: AuthState, formData: FormData): Promise<AuthState> {
     const password = formData.get('password');
+    if (typeof password !== 'string' || password.length === 0) {
+        return { error: 'Identifiants invalides ou non autorisés.' };
+    }
 
-    // Validation temporelle O(1) - Prévention basique contre les attaques par timing
-    const isValid = password === process.env.ADMIN_SECRET_TOKEN;
+    const secret = process.env.ADMIN_SECRET_TOKEN ?? '';
+    // Timing-safe comparison to prevent secret-length inference
+    const pwBuf  = Buffer.from(password.padEnd(secret.length));
+    const skBuf  = Buffer.from(secret.padEnd(password.length));
+    const isValid =
+        password.length === secret.length &&
+        timingSafeEqual(pwBuf, skBuf);
 
     if (!isValid) {
         return { error: 'Identifiants invalides ou non autorisés.' };
     }
 
-    // Next.js 15 : cookies() est asynchrone
     const cookieStore = await cookies();
-
-    // Création d'un cookie hautement sécurisé
-    cookieStore.set('admin_session', password as string, {
-        httpOnly: true, // Bloque l'accès via document.cookie (Anti-XSS)
-        secure: process.env.NODE_ENV === 'production', // Uniquement HTTPS en prod
-        sameSite: 'strict', // Protection absolue contre le CSRF
-        path: '/',
-        maxAge: 60 * 60 * 8, // Expiration absolue à 8 heures
+    cookieStore.set('admin_session', await createSessionToken(), {
+        httpOnly: true,
+        secure:   process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        path:     '/',
+        maxAge:   60 * 60 * 8,
     });
 
-    // Redirection native côté serveur
     redirect('/admin');
 }
 

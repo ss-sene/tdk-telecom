@@ -1,14 +1,30 @@
 // apps/admin/src/app/boutique/page.tsx
-import Link from 'next/link';
+export const revalidate = 3600; // ISR — rebuild at most every hour
+
+import type { Metadata } from 'next';
+import Link              from 'next/link';
+
+export const metadata: Metadata = {
+    title:       'Boutique — Internet, Starlink & Équipements réseau',
+    description: 'Forfaits Internet, kits Starlink et équipements réseau au Sénégal. Devis personnalisé via WhatsApp. Paiement Wave ou Orange Money.',
+    alternates:  { canonical: '/boutique' },
+    openGraph: {
+        title:       'Boutique TDK Telecom — Internet, Starlink & Équipements',
+        description: 'Forfaits Internet, Starlink et équipements réseau au Sénégal. Devis rapide via WhatsApp.',
+        url:         '/boutique',
+    },
+};
 import { prisma } from '@/core/db/prisma';
 import { ProductCategory } from '@/generated/prisma/enums';
 import { PublicHeader }     from '@/app/PublicHeader';
 import { PublicFooter }     from '@/app/PublicFooter';
 import type { ProductModel } from '@/generated/prisma/models/Product';
 
+import { COMPANY } from '@/lib/company';
+
 // ─── Config ───────────────────────────────────────────────────────────────────
 
-const CONTACT_WHATSAPP = 'https://wa.me/221700000000?text=Bonjour%2C%20je%20souhaite%20demander%20un%20devis%20pour%20un%20produit%20TDK%20Telecom.';
+const CONTACT_WHATSAPP = COMPANY.whatsappUrl;
 
 const CATEGORY_LABELS: Partial<Record<ProductCategory, string>> = {
     INTERNET:   'Internet',

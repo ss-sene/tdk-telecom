@@ -13,7 +13,7 @@ export function LandingMobileNav({ prefix = '' }: { prefix?: string }) {
     const NAV_ITEMS = [
         ...(prefix ? [{ href: '/',                          label: 'Accueil'   }] : []),
         { href: `${prefix}#offres`,            label: 'Offres'    },
-        { href: `${prefix}#comment-ca-marche`, label: 'Processus' },
+        { href: `${prefix}#comment-ca-marche`, label: 'Comment ça marche' },
         { href: `${prefix}#faq`,               label: 'FAQ'       },
         { href: '/boutique',                   label: 'Boutique'  },
         { href: '/starlink',                   label: 'Starlink'  },

@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    name: Lint · Typecheck · Build
+    runs-on: ubuntu-latest
+
+    env:
+      # Dummy values so Next.js build doesn't fail on missing env vars at CI time
+      DATABASE_URL:                  ${{ secrets.DATABASE_URL }}
+      ADMIN_SECRET_TOKEN:            ${{ secrets.ADMIN_SECRET_TOKEN }}
+      NEXT_PUBLIC_APP_URL:           https://tdktelecom.sn
+      WAVE_API_KEY:                  dummy
+      WAVE_WEBHOOK_SECRET:           dummy-webhook-secret-32chars-long
+      ORANGE_MONEY_API_KEY:          dummy
+      ORANGE_MONEY_MERCHANT_KEY:     dummy
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        working-directory: apps/admin
+        run: pnpm lint
+
+      - name: Typecheck
+        working-directory: apps/admin
+        run: pnpm exec tsc --noEmit
+
+      - name: Build
+        working-directory: apps/admin
+        run: pnpm build

@@ -19,17 +19,9 @@ const PLANS = [
     { id: 'Pack Premium',  label: 'Pack Premium',  price: 12000, speed: 'Jusqu\'à 30 Mbps' },
 ];
 
-const PROVIDERS: { id: PaymentProvider; label: string; logo: string }[] = [
-    {
-        id:    'WAVE',
-        label: 'Wave',
-        logo:  '〜',
-    },
-    {
-        id:    'ORANGE_MONEY',
-        label: 'Orange Money',
-        logo:  '◉',
-    },
+const PROVIDERS: { id: PaymentProvider; label: string }[] = [
+    { id: 'WAVE',         label: 'Wave'         },
+    { id: 'ORANGE_MONEY', label: 'Orange Money' },
 ];
 
 const PROVIDER_MESSAGES: Record<PaymentProvider, string> = {
@@ -44,11 +36,11 @@ function InputField({
 }) {
     return (
         <div>
-            <label htmlFor={id} className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-gray-500">
-                {label} {hint && <span className="font-normal normal-case tracking-normal text-gray-400">{hint}</span>}
+            <label htmlFor={id} className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-400">
+                {label} {hint && <span className="font-normal normal-case tracking-normal text-slate-500">{hint}</span>}
             </label>
             {children}
-            {error && <p role="alert" className="mt-1.5 text-xs font-semibold text-red-600">{error}</p>}
+            {error && <p role="alert" className="mt-1.5 text-xs font-semibold text-red-400">{error}</p>}
         </div>
     );
 }
@@ -102,10 +94,10 @@ export function CheckoutFormClient({ villages }: Props) {
         const providerLabel = PROVIDERS.find(p => p.id === state.provider)?.label ?? state.provider;
         return (
             <div className="flex min-h-[60vh] flex-col items-center justify-center gap-6 px-4">
-                <div className="h-14 w-14 animate-spin rounded-full border-[3px] border-[#1A3C9F] border-t-transparent" />
+                <div className="h-14 w-14 animate-spin rounded-full border-[3px] border-brand border-t-transparent" />
                 <div className="text-center">
-                    <p className="text-lg font-extrabold text-gray-900">Redirection vers {providerLabel}…</p>
-                    <p className="mt-1.5 text-sm text-gray-500 max-w-xs mx-auto">{PROVIDER_MESSAGES[state.provider]}</p>
+                    <p className="text-lg font-extrabold text-slate-100">Redirection vers {providerLabel}…</p>
+                    <p className="mt-1.5 text-sm text-slate-400 max-w-xs mx-auto">{PROVIDER_MESSAGES[state.provider]}</p>
                 </div>
             </div>
         );
@@ -115,18 +107,18 @@ export function CheckoutFormClient({ villages }: Props) {
     if (state.status === 'error') {
         return (
             <div className="flex min-h-[60vh] flex-col items-center justify-center gap-6 px-4 text-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-50 ring-1 ring-red-100">
-                    <svg className="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-900/20 ring-1 ring-red-800/40">
+                    <svg className="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </div>
                 <div>
-                    <h2 className="text-xl font-extrabold text-gray-900 mb-1.5">Une erreur est survenue</h2>
-                    <p className="text-sm text-gray-500 max-w-sm mx-auto">{state.message}</p>
+                    <h2 className="text-xl font-extrabold text-slate-100 mb-1.5">Une erreur est survenue</h2>
+                    <p className="text-sm text-slate-400 max-w-sm mx-auto">{state.message}</p>
                 </div>
                 <button
                     onClick={reset}
-                    className="flex h-11 items-center justify-center gap-2 rounded-xl bg-[#1A3C9F] px-8 text-sm font-bold text-white hover:bg-[#142E7B] transition-colors"
+                    className="flex h-11 items-center justify-center gap-2 rounded-xl bg-brand px-8 text-sm font-bold text-white hover:bg-brand-hover transition-colors"
                 >
                     Réessayer
                 </button>
@@ -139,8 +131,8 @@ export function CheckoutFormClient({ villages }: Props) {
         <div className="mx-auto max-w-5xl">
 
             <div className="mb-8 text-center sm:text-left">
-                <h1 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">Souscrire à Internet TDK</h1>
-                <p className="mt-1 text-sm text-gray-500">Remplissez le formulaire ci-dessous pour finaliser votre abonnement.</p>
+                <h1 className="text-2xl font-extrabold text-slate-100 sm:text-3xl">Souscrire à Internet TDK</h1>
+                <p className="mt-1 text-sm text-slate-400">Remplissez le formulaire ci-dessous pour finaliser votre abonnement.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 lg:gap-10 items-start">
@@ -148,7 +140,6 @@ export function CheckoutFormClient({ villages }: Props) {
                 {/* ── COLONNE GAUCHE : Formulaire ── */}
                 <form id="checkout-form" onSubmit={handleSubmit} className="space-y-5 order-2 lg:order-1">
 
-                    {/* Identité */}
                     <div className="grid grid-cols-2 gap-4">
                         <InputField id="firstName" label="Prénom" error={errors.firstName}>
                             <input
@@ -157,7 +148,7 @@ export function CheckoutFormClient({ villages }: Props) {
                                 value={firstName}
                                 onChange={e => setFirstName(e.target.value)}
                                 placeholder="Mamadou"
-                                className="block h-11 w-full rounded-xl border-0 px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-[#1A3C9F] outline-none"
+                                className="block h-11 w-full rounded-xl border-0 bg-slate-800 px-4 text-sm text-slate-100 ring-1 ring-inset ring-slate-600 placeholder:text-slate-500 focus:ring-2 focus:ring-brand outline-none"
                             />
                         </InputField>
                         <InputField id="lastName" label="Nom" error={errors.lastName}>
@@ -167,15 +158,14 @@ export function CheckoutFormClient({ villages }: Props) {
                                 value={lastName}
                                 onChange={e => setLastName(e.target.value)}
                                 placeholder="Diallo"
-                                className="block h-11 w-full rounded-xl border-0 px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-[#1A3C9F] outline-none"
+                                className="block h-11 w-full rounded-xl border-0 bg-slate-800 px-4 text-sm text-slate-100 ring-1 ring-inset ring-slate-600 placeholder:text-slate-500 focus:ring-2 focus:ring-brand outline-none"
                             />
                         </InputField>
                     </div>
 
-                    {/* Téléphone */}
                     <InputField id="phone" label="Numéro de téléphone" error={errors.phone}>
                         <div className="flex">
-                            <span className="inline-flex h-11 items-center rounded-l-xl bg-gray-50 px-3 text-sm font-bold text-gray-500 ring-1 ring-inset ring-gray-200">
+                            <span className="inline-flex h-11 items-center rounded-l-xl bg-slate-700 px-3 text-sm font-bold text-slate-400 ring-1 ring-inset ring-slate-600">
                                 +221
                             </span>
                             <input
@@ -184,12 +174,11 @@ export function CheckoutFormClient({ villages }: Props) {
                                 value={phone}
                                 onChange={e => setPhone(e.target.value.replace(/\D/g, '').slice(0, 9))}
                                 placeholder="77 123 45 67"
-                                className="block h-11 w-full rounded-r-xl border-0 px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-[#1A3C9F] outline-none"
+                                className="block h-11 w-full rounded-r-xl border-0 bg-slate-800 px-4 text-sm text-slate-100 ring-1 ring-inset ring-slate-600 placeholder:text-slate-500 focus:ring-2 focus:ring-brand outline-none"
                             />
                         </div>
                     </InputField>
 
-                    {/* Email */}
                     <InputField id="email" label="Email" hint="(facultatif)" error={errors.email}>
                         <input
                             id="email"
@@ -197,17 +186,16 @@ export function CheckoutFormClient({ villages }: Props) {
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                             placeholder="mamadou@example.com"
-                            className="block h-11 w-full rounded-xl border-0 px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-[#1A3C9F] outline-none"
+                            className="block h-11 w-full rounded-xl border-0 bg-slate-800 px-4 text-sm text-slate-100 ring-1 ring-inset ring-slate-600 placeholder:text-slate-500 focus:ring-2 focus:ring-brand outline-none"
                         />
                     </InputField>
 
-                    {/* Zone */}
                     <InputField id="villageId" label="Zone de couverture" error={errors.villageId}>
                         <select
                             id="villageId"
                             value={villageId}
                             onChange={e => setVillageId(e.target.value)}
-                            className="block h-11 w-full rounded-xl border-0 bg-white px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-200 focus:ring-2 focus:ring-[#1A3C9F] outline-none"
+                            className="block h-11 w-full rounded-xl border-0 bg-slate-800 px-4 text-sm text-slate-100 ring-1 ring-inset ring-slate-600 focus:ring-2 focus:ring-brand outline-none"
                         >
                             <option value="">Sélectionner une zone…</option>
                             {villages.map(v => (
@@ -225,14 +213,13 @@ export function CheckoutFormClient({ villages }: Props) {
                                 value={newVillageName}
                                 onChange={e => setNewVillageName(e.target.value)}
                                 placeholder="Ex: Quartier Liberté 6"
-                                className="block h-11 w-full rounded-xl border-0 px-4 text-sm text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-[#1A3C9F] outline-none"
+                                className="block h-11 w-full rounded-xl border-0 bg-slate-800 px-4 text-sm text-slate-100 ring-1 ring-inset ring-slate-600 placeholder:text-slate-500 focus:ring-2 focus:ring-brand outline-none"
                             />
                         </InputField>
                     )}
 
-                    {/* Moyen de paiement */}
                     <div>
-                        <p className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500">Moyen de paiement</p>
+                        <p className="mb-2 text-xs font-bold uppercase tracking-wider text-slate-400">Moyen de paiement</p>
                         <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Moyen de paiement">
                             {PROVIDERS.map(p => {
                                 const isSelected = provider === p.id;
@@ -245,8 +232,8 @@ export function CheckoutFormClient({ villages }: Props) {
                                         onClick={() => setProvider(p.id)}
                                         className={`flex items-center justify-center gap-2 h-12 rounded-xl border-2 font-bold text-sm transition-all ${
                                             isSelected
-                                                ? 'border-[#1A3C9F] bg-blue-50 text-[#1A3C9F]'
-                                                : 'border-gray-200 bg-white text-gray-500 hover:border-gray-300'
+                                                ? 'border-brand bg-brand/10 text-brand'
+                                                : 'border-slate-700 bg-slate-800 text-slate-400 hover:border-slate-600'
                                         }`}
                                     >
                                         {isSelected && (
@@ -259,14 +246,13 @@ export function CheckoutFormClient({ villages }: Props) {
                                 );
                             })}
                         </div>
-                        {errors.provider && <p role="alert" className="mt-1.5 text-xs font-semibold text-red-600">{errors.provider}</p>}
+                        {errors.provider && <p role="alert" className="mt-1.5 text-xs font-semibold text-red-400">{errors.provider}</p>}
                     </div>
 
-                    {/* CTA */}
                     <button
                         type="submit"
                         disabled={state.status === 'loading'}
-                        className="flex h-14 w-full items-center justify-center gap-2.5 rounded-xl bg-[#1A3C9F] text-sm font-bold text-white shadow-lg shadow-[#1A3C9F]/20 transition-colors hover:bg-[#142E7B] disabled:opacity-60 disabled:cursor-not-allowed"
+                        className="flex h-14 w-full items-center justify-center gap-2.5 rounded-xl bg-brand text-sm font-bold text-white shadow-lg shadow-brand/20 transition-colors hover:bg-brand-hover disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                         {state.status === 'loading' ? (
                             <>
@@ -283,22 +269,21 @@ export function CheckoutFormClient({ villages }: Props) {
                         )}
                     </button>
 
-                    {/* Trust line */}
-                    <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
+                    <div className="flex items-center justify-center gap-4 text-xs text-slate-500">
                         <span className="flex items-center gap-1.5">
-                            <svg className="h-3.5 w-3.5 text-[#2ECA50]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="h-3.5 w-3.5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                             </svg>
                             Transaction sécurisée
                         </span>
-                        <span className="text-gray-200">|</span>
+                        <span className="text-slate-700">|</span>
                         <span>TDK Telecom</span>
                     </div>
                 </form>
 
                 {/* ── COLONNE DROITE : Récapitulatif ── */}
                 <div className="space-y-4 order-1 lg:order-2">
-                    <h2 className="text-xs font-bold uppercase tracking-wider text-gray-500">Votre offre</h2>
+                    <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">Votre offre</h2>
 
                     {PLANS.map(p => (
                         <button
@@ -307,26 +292,26 @@ export function CheckoutFormClient({ villages }: Props) {
                             onClick={() => setPlan(p.id)}
                             className={`w-full text-left rounded-2xl border-2 p-5 transition-all ${
                                 plan === p.id
-                                    ? 'border-[#1A3C9F] bg-blue-50/60'
-                                    : 'border-gray-200 bg-white hover:border-gray-300'
+                                    ? 'border-brand bg-brand/10'
+                                    : 'border-slate-700 bg-slate-800 hover:border-slate-600'
                             }`}
                         >
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className={`font-extrabold text-sm ${plan === p.id ? 'text-[#1A3C9F]' : 'text-gray-900'}`}>
+                                    <p className={`font-extrabold text-sm ${plan === p.id ? 'text-brand' : 'text-slate-100'}`}>
                                         {p.label}
                                     </p>
-                                    <p className="text-xs text-gray-500 mt-0.5">{p.speed}</p>
+                                    <p className="text-xs text-slate-500 mt-0.5">{p.speed}</p>
                                 </div>
                                 <div className="text-right">
-                                    <p className="font-extrabold text-base text-gray-900">
+                                    <p className="font-extrabold text-base text-slate-100">
                                         {p.price.toLocaleString('fr-FR')} <span className="text-xs font-bold">FCFA</span>
                                     </p>
-                                    <p className="text-xs text-gray-400">/ mois</p>
+                                    <p className="text-xs text-slate-500">/ mois</p>
                                 </div>
                             </div>
                             {plan === p.id && (
-                                <div className="mt-2.5 flex items-center gap-1.5 text-xs font-bold text-[#1A3C9F]">
+                                <div className="mt-2.5 flex items-center gap-1.5 text-xs font-bold text-brand">
                                     <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                     </svg>
@@ -336,45 +321,43 @@ export function CheckoutFormClient({ villages }: Props) {
                         </button>
                     ))}
 
-                    {/* Récapitulatif */}
-                    <div className="rounded-2xl bg-[#F9FAFB] p-5 ring-1 ring-gray-200">
-                        <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Récapitulatif</p>
+                    <div className="rounded-2xl bg-slate-800 p-5 ring-1 ring-slate-700">
+                        <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Récapitulatif</p>
                         <div className="space-y-2 text-sm">
                             <div className="flex justify-between">
-                                <span className="text-gray-500">Offre</span>
-                                <span className="font-bold text-gray-900">{selectedPlan.label}</span>
+                                <span className="text-slate-400">Offre</span>
+                                <span className="font-bold text-slate-100">{selectedPlan.label}</span>
                             </div>
                             <div className="flex justify-between">
-                                <span className="text-gray-500">Débit</span>
-                                <span className="font-bold text-gray-900">{selectedPlan.speed}</span>
+                                <span className="text-slate-400">Débit</span>
+                                <span className="font-bold text-slate-100">{selectedPlan.speed}</span>
                             </div>
                             <div className="flex justify-between">
-                                <span className="text-gray-500">Via</span>
-                                <span className="font-bold text-gray-900">{PROVIDERS.find(p => p.id === provider)?.label}</span>
+                                <span className="text-slate-400">Via</span>
+                                <span className="font-bold text-slate-100">{PROVIDERS.find(p => p.id === provider)?.label}</span>
                             </div>
-                            <div className="border-t border-gray-200 pt-2.5 mt-1 flex justify-between items-baseline">
-                                <span className="text-gray-500 font-semibold">Total</span>
-                                <span className="font-extrabold text-xl text-gray-900">{selectedPlan.price.toLocaleString('fr-FR')} <span className="text-sm">FCFA</span></span>
+                            <div className="border-t border-slate-700 pt-2.5 mt-1 flex justify-between items-baseline">
+                                <span className="text-slate-400 font-semibold">Total</span>
+                                <span className="font-extrabold text-xl text-slate-100">{selectedPlan.price.toLocaleString('fr-FR')} <span className="text-sm">FCFA</span></span>
                             </div>
                         </div>
                     </div>
 
-                    {/* Trust badges dans la sidebar */}
-                    <div className="rounded-2xl bg-[#F9FAFB] px-5 py-4 ring-1 ring-gray-200 space-y-2.5">
-                        <div className="flex items-center gap-2.5 text-xs text-gray-600">
-                            <svg className="h-4 w-4 flex-none text-[#2ECA50]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="rounded-2xl bg-slate-800 px-5 py-4 ring-1 ring-slate-700 space-y-2.5">
+                        <div className="flex items-center gap-2.5 text-xs text-slate-400">
+                            <svg className="h-4 w-4 flex-none text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                             </svg>
                             <span>Paiement 100% sécurisé</span>
                         </div>
-                        <div className="flex items-center gap-2.5 text-xs text-gray-600">
-                            <svg className="h-4 w-4 flex-none text-[#2ECA50]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div className="flex items-center gap-2.5 text-xs text-slate-400">
+                            <svg className="h-4 w-4 flex-none text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                             </svg>
                             <span>Aucun frais caché</span>
                         </div>
-                        <div className="flex items-center gap-2.5 text-xs text-gray-600">
-                            <svg className="h-4 w-4 flex-none text-[#2ECA50]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div className="flex items-center gap-2.5 text-xs text-slate-400">
+                            <svg className="h-4 w-4 flex-none text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                             <span>Support local disponible</span>

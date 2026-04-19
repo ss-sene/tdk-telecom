@@ -16,11 +16,10 @@ export function MobileNav() {
 
     return (
         <>
-            {/* Hamburger button */}
             <button
                 type="button"
                 onClick={() => setOpen(o => !o)}
-                className="md:hidden flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors"
+                className="md:hidden flex h-9 w-9 items-center justify-center rounded-xl border border-slate-700 text-slate-400 hover:bg-slate-800 transition-colors"
                 aria-label="Ouvrir le menu"
                 aria-expanded={open}
             >
@@ -35,22 +34,19 @@ export function MobileNav() {
                 )}
             </button>
 
-            {/* Drawer mobile */}
             {open && (
                 <div className="fixed inset-0 z-50 md:hidden">
-                    {/* Overlay */}
                     <div
-                        className="absolute inset-0 bg-black/30"
+                        className="absolute inset-0 bg-black/50"
                         onClick={() => setOpen(false)}
                     />
-                    {/* Panel */}
-                    <div className="absolute right-0 top-0 h-full w-72 bg-white shadow-xl flex flex-col">
-                        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-                            <span className="text-sm font-extrabold text-[#1A3C9F]">TDK Admin</span>
+                    <div className="absolute right-0 top-0 h-full w-72 bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col">
+                        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800">
+                            <span className="text-sm font-extrabold text-brand">TDK Admin</span>
                             <button
                                 type="button"
                                 onClick={() => setOpen(false)}
-                                className="flex h-8 w-8 items-center justify-center rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors"
+                                className="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-700 text-slate-400 hover:bg-slate-800 transition-colors"
                             >
                                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -68,8 +64,8 @@ export function MobileNav() {
                                         onClick={() => setOpen(false)}
                                         className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${
                                             isActive
-                                                ? 'bg-[#1A3C9F]/8 text-[#1A3C9F]'
-                                                : 'text-gray-600 hover:bg-gray-50'
+                                                ? 'bg-brand/10 text-brand'
+                                                : 'text-slate-300 hover:bg-slate-800'
                                         }`}
                                     >
                                         {item.label}
@@ -78,11 +74,11 @@ export function MobileNav() {
                             })}
                         </nav>
 
-                        <div className="border-t border-gray-100 px-3 py-4">
+                        <div className="border-t border-slate-800 px-3 py-4">
                             <form action={logout}>
                                 <button
                                     type="submit"
-                                    className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors"
+                                    className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-red-400 hover:bg-red-900/20 transition-colors"
                                 >
                                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

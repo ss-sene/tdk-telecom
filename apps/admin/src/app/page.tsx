@@ -1,8 +1,20 @@
 // apps/admin/src/app/page.tsx
-import Link  from 'next/link';
-import Image from 'next/image';
+import type { Metadata }   from 'next';
+import Link                from 'next/link';
 import { TDK_PLANS_ARRAY } from '@tdk/config';
-import { PublicHeader } from './PublicHeader';
+import { PublicHeader }    from './PublicHeader';
+import { PublicFooter }    from './PublicFooter';
+
+export const metadata: Metadata = {
+    title:       'TDK Telecom — Internet Haut Débit au Sénégal',
+    description: 'Souscrivez à Internet haut débit au Sénégal. Deux forfaits clairs : 10 000 ou 12 000 FCFA/mois. Installation accompagnée, paiement Wave ou Orange Money.',
+    alternates:  { canonical: '/' },
+    openGraph: {
+        title:       'TDK Telecom — Internet Haut Débit au Sénégal',
+        description: 'Deux forfaits Internet au Sénégal. Paiement Wave ou Orange Money. Activation sous 24h.',
+        url:         '/',
+    },
+};
 
 const POPULAR = TDK_PLANS_ARRAY.find(p => p.isPopular) ?? TDK_PLANS_ARRAY[1];
 
@@ -78,6 +90,16 @@ const FAQ = [
         a: 'Oui. Contactez notre support par WhatsApp ou par téléphone pour adapter votre abonnement à vos besoins. Le changement est effectif dès le mois suivant, sans frais supplémentaires.',
     },
 ];
+
+const FAQ_JSON_LD = {
+    '@context': 'https://schema.org',
+    '@type':    'FAQPage',
+    mainEntity: FAQ.map(item => ({
+        '@type': 'Question',
+        name:    item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+};
 
 const TRUST_ITEMS = [
     { icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',        label: 'Paiement sécurisé' },
@@ -496,56 +518,13 @@ export default function HomePage() {
                     </div>
                 </section>
 
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSON_LD) }}
+                />
             </main>
 
-            {/* ── FOOTER ── */}
-            <footer className="border-t border-gray-200 dark:border-slate-700/60 bg-card dark:bg-slate-800 px-5 py-14">
-                <div className="mx-auto max-w-6xl">
-                    <div className="flex flex-col md:flex-row items-start justify-between gap-10">
-
-                        {/* Marque + tagline */}
-                        <div className="space-y-3 max-w-[280px]">
-                            <div className="flex items-center gap-2">
-                                <div className="relative h-8 w-8">
-                                    <Image src="/logo.png" alt="TDK Telecom" fill className="object-contain" sizes="32px" />
-                                </div>
-                                <span className="font-black tracking-tight text-brand">TDK Telecom</span>
-                            </div>
-                            <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed">
-                                {"Fournisseur d'accès Internet au Sénégal. Connexion haut débit pour particuliers et entreprises."}
-                            </p>
-                        </div>
-
-                        {/* Navigation */}
-                        <div className="grid grid-cols-2 gap-x-12 gap-y-3 text-sm">
-                            {[
-                                { href: '#offres',            label: 'Offres',             as: 'link' },
-                                { href: '#avantages',         label: 'Avantages',          as: 'link' },
-                                { href: '#comment-ca-marche', label: 'Comment ça marche',  as: 'link' },
-                                { href: '#faq',               label: 'FAQ',                as: 'link' },
-                                { href: '/checkout',          label: "S'abonner",          as: 'link' },
-                                { href: 'mailto:contact@tdktelecom.sn', label: 'Contact',  as: 'a'    },
-                            ].map(({ href, label, as: Tag }) =>
-                                Tag === 'a' ? (
-                                    <a key={href} href={href} className="text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-slate-100 transition-colors duration-150">
-                                        {label}
-                                    </a>
-                                ) : (
-                                    <Link key={href} href={href} className="text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-slate-100 transition-colors duration-150">
-                                        {label}
-                                    </Link>
-                                )
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Bottom bar */}
-                    <div className="mt-10 border-t border-gray-200 dark:border-slate-700/50 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-400 dark:text-slate-500">
-                        <p>© {new Date().getFullYear()} TDK Telecom. Tous droits réservés.</p>
-                        <p>{"Dakar, Sénégal — Internet simple, fiable et pensé pour votre zone."}</p>
-                    </div>
-                </div>
-            </footer>
+            <PublicFooter />
 
         </div>
     );

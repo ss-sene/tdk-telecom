@@ -1,58 +1,96 @@
 // Shared footer for /boutique, /starlink, and future public pages.
-// Uses absolute paths (/#offres) so it works from any page.
-// The landing page keeps its own inline footer with relative anchors (#offres) for smooth-scroll.
 import Link  from 'next/link';
 import Image from 'next/image';
+import { COMPANY } from '@/lib/company';
 
-const FOOTER_LINKS = [
-    { href: '/#offres',            label: 'Offres',            as: 'link' as const },
-    { href: '/#avantages',         label: 'Avantages',         as: 'link' as const },
-    { href: '/#comment-ca-marche', label: 'Comment ça marche', as: 'link' as const },
-    { href: '/#faq',               label: 'FAQ',               as: 'link' as const },
-    { href: '/boutique',           label: 'Boutique',          as: 'link' as const },
-    { href: '/starlink',           label: 'Starlink',          as: 'link' as const },
-    { href: '/checkout',           label: "S'abonner",         as: 'link' as const },
-    { href: 'mailto:contact@tdktelecom.sn', label: 'Contact',  as: 'a'    as const },
+const NAV_LINKS = [
+    { href: '/#offres',                       label: 'Offres'                      },
+    { href: '/#comment-ca-marche',            label: 'Comment ça marche'           },
+    { href: '/#faq',                          label: 'FAQ'                         },
+    { href: '/boutique',                      label: 'Boutique'                    },
+    { href: '/starlink',                      label: 'Starlink'                    },
+    { href: '/checkout',                      label: "S'abonner"                   },
+    { href: '/mentions-legales',              label: 'Mentions légales'            },
+    { href: '/politique-de-confidentialite',  label: 'Politique de confidentialité'},
+    { href: '/cgu',                           label: 'CGU'                         },
 ];
 
 export function PublicFooter() {
     return (
-        <footer className="border-t border-gray-200 dark:border-slate-700/60 bg-card dark:bg-slate-800 px-5 py-14">
+        <footer className="border-t border-slate-800 bg-slate-900 px-5 py-14">
             <div className="mx-auto max-w-6xl">
-                <div className="flex flex-col md:flex-row items-start justify-between gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 
                     {/* Marque */}
-                    <div className="space-y-3 max-w-[280px]">
+                    <div className="space-y-4">
                         <div className="flex items-center gap-2">
                             <div className="relative h-8 w-8">
-                                <Image src="/logo.png" alt="TDK Telecom" fill className="object-contain" sizes="32px" />
+                                <Image src="/logo.png" alt={COMPANY.shortName} fill className="object-contain" sizes="32px" />
                             </div>
-                            <span className="font-black tracking-tight text-brand">TDK Telecom</span>
+                            <span className="font-black tracking-tight text-brand">{COMPANY.shortName}</span>
                         </div>
-                        <p className="text-sm text-gray-500 dark:text-slate-400 leading-relaxed">
-                            {"Fournisseur d'accès Internet au Sénégal. Connexion haut débit pour particuliers et entreprises."}
+                        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            {COMPANY.name}
+                        </p>
+                        <p className="text-sm text-slate-400 leading-relaxed">
+                            Fournisseur d&apos;accès Internet haut débit au Sénégal. Connexion fiable pour particuliers, entreprises et institutions.
                         </p>
                     </div>
 
-                    {/* Liens */}
-                    <div className="grid grid-cols-2 gap-x-12 gap-y-3 text-sm">
-                        {FOOTER_LINKS.map(({ href, label, as: Tag }) =>
-                            Tag === 'a' ? (
-                                <a key={href} href={href} className="text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-slate-100 transition-colors duration-150">
-                                    {label}
+                    {/* Navigation */}
+                    <div>
+                        <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">Navigation</p>
+                        <ul className="space-y-2.5">
+                            {NAV_LINKS.map(({ href, label }) => (
+                                <li key={href}>
+                                    <Link
+                                        href={href}
+                                        className="text-sm text-slate-400 hover:text-slate-100 transition-colors duration-150"
+                                    >
+                                        {label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Contact */}
+                    <div>
+                        <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">Contact</p>
+                        <ul className="space-y-3 text-sm text-slate-400">
+                            <li className="flex items-start gap-2.5">
+                                <svg className="h-4 w-4 flex-none text-brand mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                <span>{COMPANY.address}</span>
+                            </li>
+                            <li className="flex items-center gap-2.5">
+                                <svg className="h-4 w-4 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                                <a href={`tel:${COMPANY.phone}`} className="hover:text-slate-100 transition-colors">
+                                    {COMPANY.phoneDisplay}
                                 </a>
-                            ) : (
-                                <Link key={href} href={href} className="text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-slate-100 transition-colors duration-150">
-                                    {label}
-                                </Link>
-                            )
-                        )}
+                            </li>
+                            <li className="flex items-center gap-2.5">
+                                <svg className="h-4 w-4 flex-none text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                <a href={`mailto:${COMPANY.email}`} className="hover:text-slate-100 transition-colors">
+                                    {COMPANY.email}
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
-                <div className="mt-10 border-t border-gray-200 dark:border-slate-700/50 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-400 dark:text-slate-500">
-                    <p>© {new Date().getFullYear()} TDK Telecom. Tous droits réservés.</p>
-                    <p>{"Dakar, Sénégal — Internet simple, fiable et pensé pour votre zone."}</p>
+                <div className="mt-10 border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+                    <p>© {new Date().getFullYear()} {COMPANY.name}. Tous droits réservés.</p>
+                    <div className="flex gap-4">
+                        <Link href="/mentions-legales" className="hover:text-slate-300 transition-colors">Mentions légales</Link>
+                        <Link href="/politique-de-confidentialite" className="hover:text-slate-300 transition-colors">Confidentialité</Link>
+                        <Link href="/cgu" className="hover:text-slate-300 transition-colors">CGU</Link>
+                    </div>
                 </div>
             </div>
         </footer>

@@ -1,12 +1,26 @@
 // apps/admin/src/app/starlink/page.tsx
-import Link from 'next/link';
-import { PublicHeader } from '@/app/PublicHeader';
-import { PublicFooter } from '@/app/PublicFooter';
+export const revalidate = 86400; // ISR — static data, rebuild daily
+
+import type { Metadata } from 'next';
+import Link              from 'next/link';
+import { PublicHeader }  from '@/app/PublicHeader';
+import { PublicFooter }  from '@/app/PublicFooter';
+import { COMPANY }       from '@/lib/company';
+
+export const metadata: Metadata = {
+    title:       'Starlink au Sénégal — Installation & Abonnements',
+    description: 'TDK Telecom, partenaire officiel Starlink au Sénégal. Installation par techniciens locaux. Abonnements dès 22 000 F/mois. Paiement Wave ou Orange Money.',
+    alternates:  { canonical: '/starlink' },
+    openGraph: {
+        title:       'Starlink au Sénégal — Installation & Abonnements | TDK Telecom',
+        description: 'Partenaire Starlink officiel. Internet satellite partout au Sénégal. Dès 22 000 F/mois, payable via Wave ou Orange Money.',
+        url:         '/starlink',
+    },
+};
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
-const CONTACT_WHATSAPP = 'https://wa.me/221700000000';
-const CONTACT_DEVIS    = `${CONTACT_WHATSAPP}?text=${encodeURIComponent('Bonjour, je souhaite un devis pour Starlink au Sénégal.')}`;
+const CONTACT_DEVIS = `${COMPANY.whatsappBase}?text=${encodeURIComponent('Bonjour, je souhaite un devis pour Starlink au Sénégal.')}`;
 
 // ─── Data statique ────────────────────────────────────────────────────────────
 
@@ -176,6 +190,16 @@ const FAQ = [
         a: "Oui. Starlink Business offre un débit prioritaire, une latence réduite et un SLA dédié — idéal pour les entreprises, ONG et institutions qui ont besoin d'une connexion fiable. Contactez-nous pour un devis personnalisé.",
     },
 ];
+
+const FAQ_JSON_LD = {
+    '@context': 'https://schema.org',
+    '@type':    'FAQPage',
+    mainEntity: FAQ.map(item => ({
+        '@type': 'Question',
+        name:    item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+};
 
 const TRUST = [
     { icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', label: 'Installation garantie' },
@@ -352,7 +376,7 @@ export default function StarlinkPage() {
                                     </div>
 
                                     <a
-                                        href={`${CONTACT_WHATSAPP}?text=${encodeURIComponent(`Bonjour, je souhaite souscrire à l'offre Starlink : ${plan.name}`)}`}
+                                        href={`${COMPANY.whatsappBase}?text=${encodeURIComponent(`Bonjour, je souhaite souscrire à l'offre Starlink : ${plan.name}`)}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className={`flex h-11 items-center justify-center gap-2 rounded-xl text-sm font-bold transition-colors ${
@@ -545,6 +569,10 @@ export default function StarlinkPage() {
                     </div>
                 </section>
 
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSON_LD) }}
+                />
             </main>
 
             <PublicFooter />

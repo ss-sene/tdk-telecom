@@ -33,6 +33,11 @@ tsconfig.tsbuildinfo
 *.db-journal
 # Remarque : Ne pas ignorer le dossier prisma/migrations/ !
 
+# --- FICHIERS TEMPORAIRES & DONNÉES ───────────────────────────────────────────
+*.xlsx
+*.csv
+*.pdf
+
 # --- LOGS & DIAGNOSTICS ---
 npm-debug.log*
 yarn-debug.log*
