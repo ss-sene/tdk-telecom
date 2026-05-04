@@ -7,6 +7,7 @@ import { PublicHeader }    from './PublicHeader';
 import { PublicFooter }    from './PublicFooter';
 import { HomeHero }        from './HomeHero';
 
+
 export const metadata: Metadata = {
     title:       'Internet Haut Débit au Sénégal — Forfaits dès 10 000 FCFA/mois',
     description: 'TDK Telecom — Internet haut débit au Sénégal dès 10 000 FCFA/mois. Installation accompagnée, activation sous 24h, paiement Wave ou Orange Money. Couverture nationale.',

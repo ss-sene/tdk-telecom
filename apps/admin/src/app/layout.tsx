@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({
   variable: "--font-inter",
@@ -133,12 +134,13 @@ export default function RootLayout({
   return (
     <html lang="fr" className="scroll-smooth">
       <head>
+        <SpeedInsights />
         {/* Geo tags — local SEO Sénégal */}
         <meta name="geo.region"      content="SN-DB" />
         <meta name="geo.placename"   content="Touba Darou Khoudoss, Diourbel, Sénégal" />
         <meta name="geo.position"    content="14.8500;-15.8800" />
         <meta name="ICBM"            content="14.8500, -15.8800" />
-
+        
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_LD) }}
