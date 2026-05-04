@@ -9,12 +9,12 @@ const schema = z.object({
     NEXT_PUBLIC_APP_URL: z.string().url({ message: 'NEXT_PUBLIC_APP_URL must be a valid URL' }),
     // Wave Checkout API
     WAVE_API_KEY:        z.string().min(1, 'WAVE_API_KEY is required'),
-    WAVE_WEBHOOK_SECRET: z.string().min(1, 'WAVE_WEBHOOK_SECRET is required'),
+    /*WAVE_WEBHOOK_SECRET: z.string().min(1, 'WAVE_WEBHOOK_SECRET is required'),
     // Orange Money API
     OM_CLIENT_ID:     z.string().min(1, 'OM_CLIENT_ID is required'),
     OM_CLIENT_SECRET: z.string().min(1, 'OM_CLIENT_SECRET is required'),
     OM_BASE_URL:      z.string().url({ message: 'OM_BASE_URL must be a valid URL' }),
-    OM_MERCHANT_KEY:  z.string().min(1, 'OM_MERCHANT_KEY is required'),
+    OM_MERCHANT_KEY:  z.string().min(1, 'OM_MERCHANT_KEY is required'),*/
 });
 
 function validateEnv() {
