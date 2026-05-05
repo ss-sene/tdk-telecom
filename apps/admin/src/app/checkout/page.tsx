@@ -1,4 +1,6 @@
 // app/checkout/page.tsx
+export const dynamic = 'force-dynamic';
+
 import type { Metadata }      from 'next';
 import { prisma }             from '@/core/db/prisma';
 import { COMPANY }            from '@/lib/company';

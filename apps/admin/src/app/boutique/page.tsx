@@ -1,5 +1,5 @@
 // apps/admin/src/app/boutique/page.tsx
-export const revalidate = 3600; // ISR — rebuild at most every hour
+export const dynamic = 'force-dynamic';
 
 import type { Metadata } from 'next';
 import Link              from 'next/link';
