@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useState } from 'react';
 import { renameVillage, deleteVillage }        from '@/core/actions/villages.action';
 
 interface Props {
@@ -13,13 +13,17 @@ interface Props {
 export function VillageRow({ id, titre, clientCount, paymentCount }: Props) {
     const [editing,     setEditing]     = useState(false);
     const [deleteError, setDeleteError] = useState('');
+    const [prevOk,      setPrevOk]      = useState<boolean | undefined>(undefined);
 
     const boundRename = renameVillage.bind(null, id);
     const [renameState, formAction, pending] = useActionState(boundRename, {});
 
-    useEffect(() => {
+    // Fermer le formulaire quand le renommage réussit.
+    // Pattern React recommandé : mise à jour d'état pendant le rendu (pas d'effet).
+    if (renameState.ok !== prevOk) {
+        setPrevOk(renameState.ok);
         if (renameState.ok) setEditing(false);
-    }, [renameState.ok]);
+    }
 
     async function handleDelete() {
         setDeleteError('');

@@ -171,7 +171,7 @@ export function ProductForm({ product }: { product: ProductModel | null }) {
                         defaultChecked={product?.highlighted ?? false}
                         className="h-4 w-4 rounded border-gray-300 text-brand focus:ring-brand"
                     />
-                    <span className="text-sm font-medium text-gray-700 dark:text-slate-300">Mise en avant (badge "Populaire")</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-slate-300">Mise en avant (badge &quot;Populaire&quot;)</span>
                 </label>
 
                 <label className="flex items-center gap-2.5 cursor-pointer">

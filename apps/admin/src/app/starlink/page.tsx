@@ -433,7 +433,7 @@ export default function StarlinkPage() {
                         </div>
 
                         <p className="mt-8 text-center text-xs text-text-faint">
-                            Tarifs officiels Starlink SpaceX au Sénégal. Frais d'installation TDK Telecom en sus — contactez-nous pour un devis complet.
+                            {`Tarifs officiels Starlink SpaceX au Sénégal. Frais d'installation TDK Telecom en sus — contactez-nous pour un devis complet.`}
                         </p>
                     </div>
                 </section>
