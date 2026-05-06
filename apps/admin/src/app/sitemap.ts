@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdktelecom.sn';
+    const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdk-telecom.com';
     const now  = new Date();
 
     return [

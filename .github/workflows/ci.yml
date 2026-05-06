@@ -15,7 +15,7 @@ jobs:
       # Dummy values so Next.js build doesn't fail on missing env vars at CI time
       DATABASE_URL:                  ${{ secrets.DATABASE_URL }}
       ADMIN_SECRET_TOKEN:            ${{ secrets.ADMIN_SECRET_TOKEN }}
-      NEXT_PUBLIC_APP_URL:           https://tdktelecom.sn
+      NEXT_PUBLIC_APP_URL:           https://tdk-telecom.com
       WAVE_API_KEY:                  dummy
       WAVE_SIGNING_SECRET:           dummy-signing-secret-32chars-long
       WAVE_WEBHOOK_SECRET:           dummy-webhook-secret-32chars-long

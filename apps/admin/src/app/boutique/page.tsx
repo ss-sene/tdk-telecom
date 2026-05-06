@@ -366,8 +366,8 @@ export default async function BoutiquePage({
                         '@context':        'https://schema.org',
                         '@type':           'BreadcrumbList',
                         'itemListElement': [
-                            { '@type': 'ListItem', 'position': 1, 'name': 'Accueil',  'item': `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdktelecom.sn'}/`        },
-                            { '@type': 'ListItem', 'position': 2, 'name': 'Boutique', 'item': `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdktelecom.sn'}/boutique` },
+                            { '@type': 'ListItem', 'position': 1, 'name': 'Accueil',  'item': `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdk-telecom.com'}/`        },
+                            { '@type': 'ListItem', 'position': 2, 'name': 'Boutique', 'item': `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdk-telecom.com'}/boutique` },
                         ],
                     }) }}
                 />

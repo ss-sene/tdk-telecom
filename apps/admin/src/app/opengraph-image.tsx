@@ -58,7 +58,7 @@ export default function OgImage() {
                 {/* URL — bottom right */}
                 <div style={{ display: 'flex', flexGrow: 1, justifyContent: 'flex-end', alignItems: 'flex-end', marginTop: '24px' }}>
                     <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '22px', display: 'flex' }}>
-                        tdktelecom.sn
+                        tdk-telecom.com
                     </span>
                 </div>
             </div>

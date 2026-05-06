@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 // Rate-limit uses module-level state — reload the module between test suites
 // so the in-memory store is always fresh.

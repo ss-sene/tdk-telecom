@@ -203,7 +203,7 @@ const FAQ_JSON_LD = {
     })),
 };
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdktelecom.sn';
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdk-telecom.com';
 
 const BREADCRUMB_LD = {
     '@context':        'https://schema.org',

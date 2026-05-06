@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     },
 };
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdktelecom.sn';
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdk-telecom.com';
 
 export default async function ZonesCouvertesPage() {
     const villages = await prisma.village.findMany({
