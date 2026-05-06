@@ -87,7 +87,7 @@ export default async function ZonesCouvertesPage() {
                                 href="/checkout"
                                 className="inline-flex h-11 items-center gap-2 rounded-xl bg-brand px-6 text-sm font-bold text-[#121A26] hover:bg-brand-hover transition-colors"
                             >
-                                Souscrire maintenant
+                                Payer maintenant
                                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                 </svg>

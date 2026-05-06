@@ -414,7 +414,7 @@ export default function StarlinkPage() {
                                     </div>
 
                                     <a
-                                        href={`${COMPANY.whatsappBase}?text=${encodeURIComponent(`Bonjour, je souhaite souscrire à l'offre Starlink : ${plan.name}`)}`}
+                                        href={`${COMPANY.whatsappBase}?text=${encodeURIComponent(`Bonjour, je souhaite payer l'offre Starlink : ${plan.name}`)}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className={`flex h-11 items-center justify-center gap-2 rounded-xl text-sm font-bold transition-colors ${
@@ -423,7 +423,7 @@ export default function StarlinkPage() {
                                                 : 'border-2 border-border-default text-text-secondary hover:border-brand hover:text-brand'
                                         }`}
                                     >
-                                        Souscrire
+                                        Payer
                                         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                         </svg>

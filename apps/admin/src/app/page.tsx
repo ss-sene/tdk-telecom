@@ -20,7 +20,6 @@ export const metadata: Metadata = {
     },
 };
 
-
 const AVANTAGES = [
     {
         title: 'Connexion sans interruption',
@@ -337,7 +336,7 @@ export default function HomePage() {
                                                 : 'border-2 border-brand/60 text-brand hover:bg-brand/10 hover:border-brand transition-colors'
                                         }`}
                                     >
-                                        Souscrire à cette offre
+                                        Payer cette offre
                                     </Link>
                                 </article>
                             ))}
@@ -407,7 +406,7 @@ export default function HomePage() {
                                 Tout ce que vous devez savoir
                             </h2>
                             <p className="text-base text-text-secondary max-w-[42ch] mx-auto">
-                                Les réponses aux questions les plus posées avant de souscrire.
+                                Les réponses aux questions les plus posées avant de payer.
                             </p>
                         </div>
                         <div className="space-y-3">

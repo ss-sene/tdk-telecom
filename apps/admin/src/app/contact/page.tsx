@@ -32,7 +32,7 @@ const CONTACT_PAGE_LD = {
     '@id':         `${APP_URL}/contact`,
     'url':         `${APP_URL}/contact`,
     'name':        'Contact TDK Telecom',
-    'description': "Contactez TDK Telecom pour souscrire à un forfait Internet, obtenir un devis Starlink ou pour toute assistance.",
+    'description': "Contactez TDK Telecom pour payer un forfait Internet, obtenir un devis Starlink ou pour toute assistance.",
     'isPartOf':    { '@id': `${APP_URL}/#website` },
     'about':       { '@id': `${APP_URL}/#organization` },
 };
@@ -129,7 +129,7 @@ export default function ContactPage() {
                     <p className="text-xs font-bold uppercase tracking-wider text-text-faint mb-5">Accès rapide</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {[
-                            { href: '/checkout',        label: 'Souscrire à un forfait Internet',    desc: 'Activez votre connexion en ligne en 3 minutes'  },
+                            { href: '/checkout',        label: 'Payer un forfait Internet',    desc: 'Activez votre connexion en ligne en 3 minutes'  },
                             { href: '/starlink',        label: 'Devis Starlink',                     desc: 'Internet satellite partout au Sénégal'          },
                             { href: '/boutique',        label: 'Boutique équipements',               desc: 'Routeurs, kits Starlink et équipements réseau'  },
                             { href: '/zones-couvertes', label: 'Zones couvertes',                    desc: 'Vérifiez la disponibilité dans votre localité'  },

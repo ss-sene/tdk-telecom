@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { Analytics } from "@vercel/analytics/next"
+import Script from 'next/script'
 
 const inter = Inter({
   variable: "--font-inter",
@@ -10,7 +9,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdktelecom.sn';
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://tdktelecom.com';
 
 export const metadata: Metadata = {
   title: {
@@ -135,7 +134,17 @@ export default function RootLayout({
   return (
     <html lang="fr" className="scroll-smooth">
       <head>
-        <SpeedInsights />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            strategy="afterInteractive"
+          />
+        )}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <Script id="ga4-init" strategy="afterInteractive">
+            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${process.env.NEXT_PUBLIC_GA_ID}');`}
+          </Script>
+        )}
         {/* Geo tags — local SEO Sénégal */}
         <meta name="geo.region"      content="SN-DB" />
         <meta name="geo.placename"   content="Touba Darou Khoudoss, Diourbel, Sénégal" />
@@ -153,7 +162,6 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} antialiased selection:bg-brand selection:text-[#121A26]`}>
         {children}
-        <Analytics />
       </body>
     </html>
   );

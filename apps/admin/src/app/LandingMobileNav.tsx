@@ -78,14 +78,14 @@ export function LandingMobileNav({ prefix = '' }: { prefix?: string }) {
                 })}
             </nav>
 
-            {/* CTA Souscrire */}
+            {/* CTA Payer */}
             <div className="border-t border-border-faint p-5">
                 <Link
                     href="/checkout"
                     onClick={close}
                     className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand text-sm font-bold text-[#121A26] hover:bg-brand-hover transition-colors shadow-sm"
                 >
-                    Souscrire maintenant
+                    Payer maintenant
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>

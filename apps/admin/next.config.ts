@@ -2,13 +2,12 @@ import type { NextConfig } from "next";
 
 const CSP = [
     "default-src 'self'",
-    // Next.js requires 'unsafe-inline' for style-in-JS and 'unsafe-eval' for hot-reload in dev
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+    "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: blob: https:",
     // Neon serverless uses WebSocket; allow Wave + Orange Money API calls from server actions
-    "connect-src 'self' https://api.wave.com https://api.orange-sonatel.com wss://*.neon.tech",
+    "connect-src 'self' https://api.wave.com https://api.orange-sonatel.com wss://*.neon.tech https://www.google-analytics.com",
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",
