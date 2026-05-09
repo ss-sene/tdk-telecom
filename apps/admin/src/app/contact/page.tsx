@@ -47,11 +47,11 @@ export default function ContactPage() {
                 <div className="mb-12">
                     <p className="text-xs font-bold uppercase tracking-widest text-brand mb-3">Contact</p>
                     <h1 className="text-3xl font-black tracking-[-0.03em] text-text-base sm:text-4xl mb-4">
-                        Parlez-nous
+                        Notre équipe est là pour vous
                     </h1>
                     <p className="text-base text-text-muted max-w-[46ch] leading-relaxed">
-                        Notre équipe est disponible 7j/7 pour répondre à vos questions sur les abonnements,
-                        l&apos;installation ou les équipements.
+                        Une question sur un abonnement, une installation ou un équipement ?
+                        Nous répondons 7j/7, par WhatsApp, téléphone ou email.
                     </p>
                 </div>
 

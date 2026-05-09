@@ -247,10 +247,10 @@ export default async function BoutiquePage({
                 {/* ── Hero ── */}
                 <div className="mb-10">
                     <h1 className="text-3xl font-black tracking-tight text-text-base mb-2">
-                        Notre boutique
+                        Tous nos équipements
                     </h1>
                     <p className="text-base text-text-muted max-w-xl">
-                        Équipements réseau, forfaits internet et solutions Starlink. Contactez-nous pour un devis personnalisé.
+                        Forfaits Internet, kits Starlink et équipements réseau. Obtenez un devis personnalisé via WhatsApp sous 24h.
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
                         {[

@@ -150,8 +150,8 @@ export function CheckoutFormClient({ villages, initialPlan }: Props) {
         <div className="mx-auto max-w-5xl">
 
             <div className="mb-8 text-center sm:text-left">
-                <h1 className="text-2xl font-extrabold text-text-base sm:text-3xl">Payer à Internet TDK</h1>
-                <p className="mt-1 text-sm text-text-muted">Remplissez le formulaire ci-dessous pour finaliser votre abonnement.</p>
+                <h1 className="text-2xl font-extrabold text-text-base sm:text-3xl">Finalisez votre abonnement en quelques secondes</h1>
+                <p className="mt-1 text-sm text-text-muted">Renseignez vos informations et payez en toute sécurité via Wave ou Orange Money.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8 lg:gap-10 items-start">

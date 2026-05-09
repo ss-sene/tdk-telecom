@@ -107,7 +107,7 @@ const STARLINK_PLANS = [
     },
     {
         id:           'priority-local',
-        name:         'Prioritaire Local',
+        name:         'Business',
         target:       'PME, ONG & institutions',
         priceMonthly: 24_000,
         highlighted:  false,
@@ -162,7 +162,7 @@ const KITS = [
             'Câble 15 m',
             'Pied mural & support inclus',
         ],
-        compatible: 'Résidentiel · Prioritaire Local',
+        compatible: 'Résidentiel · Business',
     },
 ];
 
@@ -170,10 +170,6 @@ const FAQ = [
     {
         q: 'Starlink fonctionne-t-il partout au Sénégal ?',
         a: "Oui. La constellation de satellites Starlink couvre l'ensemble du territoire sénégalais. C'est la solution idéale pour les zones rurales, les villages éloignés et toute localité sans accès fibre ou 4G stable.",
-    },
-    {
-        q: 'Quelle est la différence entre Starlink et une box 4G ?',
-        a: "Starlink utilise des satellites en orbite basse (550 km) pour délivrer un signal direct, indépendant de toute infrastructure terrestre. La 4G dépend des antennes relais. Dans les zones mal couvertes, Starlink est beaucoup plus fiable et rapide.",
     },
     {
         q: 'L\'installation est-elle complexe ?',
@@ -186,10 +182,6 @@ const FAQ = [
     {
         q: 'Comment se fait le paiement ?',
         a: "Vous payez votre abonnement mensuel via Wave ou Orange Money, directement depuis votre téléphone. Pas besoin de carte bancaire internationale. Le kit Starlink est facturé séparément à l'installation.",
-    },
-    {
-        q: 'Puis-je utiliser Starlink Business pour mon entreprise ?',
-        a: "Oui. Starlink Business offre un débit prioritaire, une latence réduite et un SLA dédié — idéal pour les entreprises, ONG et institutions qui ont besoin d'une connexion fiable. Contactez-nous pour un devis personnalisé.",
     },
 ];
 
@@ -284,8 +276,8 @@ export default function StarlinkPage() {
                         </h1>
 
                         <p className="mx-auto mb-8 max-w-[44ch] text-base text-white/70 sm:text-lg leading-relaxed">
-                            TDK Telecom installe et active Starlink dans votre zone.
-                            Connexion satellite, paiement mobile money, techniciens locaux.
+                            TDK Telecom installe et active Starlink dans votre zone, même là
+                            où il n&apos;y a pas de réseau fixe. Paiement Wave ou Orange Money.
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
