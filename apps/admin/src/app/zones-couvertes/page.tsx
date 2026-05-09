@@ -75,12 +75,12 @@ export default async function ZonesCouvertesPage() {
                         </div>
                         <p className="text-xs font-bold uppercase tracking-widest text-brand mb-3">Couverture</p>
                         <h1 className="text-3xl font-black tracking-[-0.03em] text-text-base sm:text-4xl mb-4">
-                            Zones couvertes
+                            Votre zone est-elle couverte ?
                         </h1>
                         <p className="text-base text-text-muted max-w-[52ch] leading-relaxed">
                             TDK Telecom déploie l&apos;Internet haut débit dans{' '}
                             <strong className="text-text-secondary">{villages.length} localité{villages.length > 1 ? 's' : ''}</strong>{' '}
-                            au Sénégal. Vérifiez si votre zone est desservie et payez directement en ligne.
+                            au Sénégal. Consultez la liste ci-dessous et abonnez-vous directement en ligne.
                         </p>
                         <div className="mt-6 flex flex-wrap gap-3">
                             <Link

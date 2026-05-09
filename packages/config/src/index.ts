@@ -4,7 +4,7 @@ export const TDK_PLANS = {
         name: "Pack Standard",
         price: 10000,
         speed: "Jusqu'à 15 Mbps",
-        features: ["Connexion illimitée 24/7", "Routeur inclus", "Support client local", "Idéal pour 2-3 appareils"],
+        features: ["Connexion Internet illimitée", "Routeur inclus", "Support client local", "Idéal pour 2 à 3 appareils"],
         isPopular: false,
     },
     PREMIUM: {
@@ -12,7 +12,7 @@ export const TDK_PLANS = {
         name: "Pack Premium",
         price: 12000,
         speed: "Jusqu'à 30 Mbps",
-        features: ["Connexion illimitée 24/7", "Routeur double bande", "Support prioritaire 24/7", "Idéal pour le streaming & gaming"],
+        features: ["Connexion Internet illimitée", "Routeur double bande (meilleure couverture Wi-Fi)", "Support prioritaire 24/7", "Idéal pour familles et professionnels"],
         isPopular: true,
     }
 } as const;
